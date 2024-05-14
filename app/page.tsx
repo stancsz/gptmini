@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect } from 'react';
 import OpenAI from 'openai';
-import { saveAs } from 'file-saver';  // Import file-saver for download
-
+import { saveAs } from 'file-saver';
+import './chatpage.css';
 
 interface Message {
   role: 'user' | 'assistant';
@@ -16,7 +16,7 @@ export default function ChatPage() {
   const [userToken, setUserToken] = useState('');
   const [isTokenSet, setIsTokenSet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null); // State for error message
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const cachedToken = localStorage.getItem('userToken');
@@ -30,7 +30,6 @@ export default function ChatPage() {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
       const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
       localStorage.setItem('chatHistory', chatHistory);
-      // You can customize the message here:
       event.preventDefault();
       event.returnValue = '';
     };
@@ -39,7 +38,7 @@ export default function ChatPage() {
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
     };
-  }, [messages]); // Run only when messages change
+  }, [messages]);
 
   useEffect(() => {
     const savedHistory = localStorage.getItem('chatHistory');
@@ -50,17 +49,22 @@ export default function ChatPage() {
       });
       setMessages(savedMessages);
     }
-  }, []); // Run only once on component mount
+  }, []);
 
   const handleDownload = () => {
     const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
+    const firstUserMessage = messages.find(msg => msg.role === 'user')?.content || '';
+    const truncatedMessage = firstUserMessage.substring(0, 30).replace(/\s+/g, '_');
+    const dateStr = new Date().toISOString().split('T')[0];
+    const fileName = `${dateStr}_${truncatedMessage}.txt`;
+
     const blob = new Blob([chatHistory], { type: 'text/plain;charset=utf-8' });
-    saveAs(blob, 'chat_history.txt');
+    saveAs(blob, fileName);
   };
 
   const handleClearMessages = () => {
-    setMessages([]); // Clear the messages array
-    localStorage.removeItem('chatHistory'); // Optionally clear from localStorage as well
+    setMessages([]);
+    localStorage.removeItem('chatHistory');
   };
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -72,17 +76,15 @@ export default function ChatPage() {
   };
 
   const handleSaveToken = (event: React.FormEvent) => {
-    event.preventDefault(); // Prevent default form submission
+    event.preventDefault();
     if (!userToken.trim()) {
-      setError('API key is required'); // Show an error message
+      setError('API key is required');
       return;
     }
 
-    const obfuscatedToken = '*'.repeat(userToken.length);
     localStorage.setItem('userToken', userToken);
-    setUserToken(obfuscatedToken);
     setIsTokenSet(true);
-    setError(null); // Clear any previous error
+    setError(null);
   };
 
   const handleSend = async (event: React.FormEvent) => {
@@ -91,7 +93,6 @@ export default function ChatPage() {
 
     setIsLoading(true);
 
-    // Include the new user message before making the API call
     const updatedMessages: Message[] = [...messages, { role: 'user', content: inputMessage }];
     setMessages(updatedMessages);
     setInputMessage('');
@@ -99,13 +100,13 @@ export default function ChatPage() {
     try {
       const openai = new OpenAI({
         apiKey: userToken,
-        dangerouslyAllowBrowser: true, // Enable browser usage (use with caution)
+        dangerouslyAllowBrowser: true,
       });
 
       const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo", // or your preferred model
+        model: "gpt-3.5-turbo",
         messages: updatedMessages.map(msg => ({ role: msg.role, content: msg.content })),
-        temperature: 1, // Adjust these parameters as needed
+        temperature: 1,
         max_tokens: 4095,
         top_p: 1,
         frequency_penalty: 0,
@@ -132,78 +133,65 @@ export default function ChatPage() {
     }
   };
 
-
   return (
-    <div style={{ margin: '0 auto', maxWidth: '960px', padding: '20px', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <main style={{ flex: 1, overflowY: 'auto', marginBottom: '20px' }}>
-        {/* Display Messages */}
+    <div className="container">
+      <div className="main">
         {messages.map((message, index) => (
-          <div
-            key={index}
-            style={{
-              margin: '10px 0',
-              textAlign: message.role === 'user' ? 'right' : 'left',
-              padding: '8px 12px',
-              borderRadius: '8px',
-              backgroundColor: message.role === 'user' ? '#f0f0f0' : '#e0e0e0'
-            }}
-          >
-            {message.content}
+          <div key={index} className={`message-container ${message.role}`}>
+            <div className={`message-bubble ${message.role}`}>
+              {message.content}
+            </div>
           </div>
         ))}
-      </main>
-
-      <footer style={{ position: 'sticky', bottom: '20px', width: '100%' }}>
-  {!isTokenSet ? (
-    <form onSubmit={handleSaveToken} style={{ marginBottom: '10px' }}> {/* Add margin bottom */}
-      <input type="hidden" name="username" />
-      <input
-        type="password"
-        value={userToken}
-        onChange={handleTokenChange}
-        autoComplete="new-password"
-        placeholder="Enter your OpenAI API key"
-        style={{ marginRight: '10px', flex: 1 }}  // Allow input to grow
-      />
-      <button type="submit">Save Token</button>
-    </form>
-  ) : (
-    <div style={{ display: 'flex', flexDirection: 'column' }}>
-      <form onSubmit={handleSend} style={{ display: 'flex', marginBottom: '10px' }}> {/* Add margin bottom */}
-        <input
-          type="text"
-          value={inputMessage}
-          onChange={handleInputChange}
-          placeholder="Type your message here..."
-          style={{ flex: 1, marginRight: '10px' }}
-        />
-        <button type="submit" disabled={isLoading}>
-          {isLoading ? 'Sending...' : 'Send'}
-        </button>
-      </form>
-      <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-        <button onClick={handleDownload} disabled={messages.length === 0}>
-          Download
-        </button>
-        <button onClick={handleClearMessages}>
-          Clear
-        </button>
+      </div>
+      <div className="footer">
+        {!isTokenSet ? (
+          <form className="form" onSubmit={handleSaveToken}>
+            <input
+              type="password"
+              className="input"
+              value={userToken}
+              onChange={handleTokenChange}
+              autoComplete="new-password"
+              placeholder="Enter your OpenAI API key"
+            />
+            <button type="submit" className="button">Save Token</button>
+          </form>
+        ) : (
+          <div>
+            <form className="form" onSubmit={handleSend}>
+              <input
+                type="text"
+                className="input"
+                value={inputMessage}
+                onChange={handleInputChange}
+                placeholder="Type your message here..."
+              />
+              <button type="submit" className="button" disabled={isLoading}>
+                {isLoading ? 'Sending...' : 'Send'}
+              </button>
+            </form>
+            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
+              <button onClick={handleDownload} className="secondary-button" disabled={messages.length === 0}>
+                Download
+              </button>
+              <button onClick={handleClearMessages} className="secondary-button">
+                Clear
+              </button>
+            </div>
+          </div>
+        )}
+        {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+        <div className="info-text">
+          This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key 
+          <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
+            (https://platform.openai.com/api-keys)
+          </a>. Your API key will only be stored locally in your browser. 
+          <a href="https://github.com/stancsz/my-chat-app" target="_blank" rel="noopener noreferrer">
+            View source on GitHub
+          </a>
+        </div>
       </div>
     </div>
-  )}
-
-  <div style={{ marginTop: '20px', fontSize: '0.8rem' }}> {/* Add spacing, smaller font */}
-    This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key 
-    <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
-      (https://platform.openai.com/api-keys)
-    </a>. Your API key will only be stored locally in your browser. 
-    <a href="https://github.com/stancsz/my-chat-app" target="_blank" rel="noopener noreferrer" style={{ display: 'block' }}> {/* Make link a block element */}
-      View source on GitHub
-    </a>
-  </div>
-</footer>
-
-    </div>
   );
-
 }

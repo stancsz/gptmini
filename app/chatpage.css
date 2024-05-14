@@ -1,0 +1,122 @@
+/* ChatPage.css */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin: 0 auto;
+    max-width: 960px;
+    padding: 20px;
+    min-height: 100vh;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main {
+    flex: 1;
+    overflow-y: auto;
+    margin-bottom: 20px;
+  }
+  
+  .footer {
+    position: sticky;
+    bottom: 20px;
+    width: 100%;
+  }
+  
+  .message-container {
+    display: flex;
+    margin: 10px 0;
+  }
+  
+  .message-container.user {
+    justify-content: flex-end;
+  }
+  
+  .message-container.assistant {
+    justify-content: flex-start;
+  }
+  
+  .message-bubble {
+    max-width: 60%;
+    padding: 10px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 1.4;
+    word-wrap: break-word;
+  }
+  
+  .message-bubble.user {
+    background-color: #007bff;
+    color: #fff;
+  }
+  
+  .message-bubble.assistant {
+    background-color: #e0e0e0;
+    color: #000;
+  }
+  
+  .form {
+    display: flex;
+    margin-bottom: 10px;
+  }
+  
+  .input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    margin-right: 10px;
+  }
+  
+  .button,
+  .secondary-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button {
+    background-color: #007bff;
+  }
+  
+  .button:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+  }
+  
+  .secondary-button {
+    background-color: #6c757d;
+  }
+  
+  .secondary-button:hover {
+    background-color: #5a6268;
+  }
+  
+  .info-text {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    text-align: center;
+  }
+  
+  .info-text a {
+    color: #007bff;
+    text-decoration: none;
+  }
+  
+  .info-text a:hover {
+    text-decoration: underline;
+  }
+  
