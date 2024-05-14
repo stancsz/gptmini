@@ -62,6 +62,16 @@ export default function ChatPage() {
     saveAs(blob, fileName);
   };
 
+  const handleDownloadLastAIResponse = () => {
+    const lastAIMessage = messages.filter(msg => msg.role === 'assistant').slice(-1)[0]?.content || 'No AI response found.';
+    const truncatedMessage = lastAIMessage.substring(0, 20).replace(/\s+/g, '_');
+    const dateStr = new Date().toISOString().split('T')[0];
+    const fileName = `${dateStr}_${truncatedMessage}.txt`;
+  
+    const blob = new Blob([lastAIMessage], { type: 'text/plain;charset=utf-8' });
+    saveAs(blob, fileName);
+  };
+
   const handleClearMessages = () => {
     setMessages([]);
     localStorage.removeItem('chatHistory');
@@ -104,7 +114,7 @@ export default function ChatPage() {
       });
 
       const response = await openai.chat.completions.create({
-        model: "gpt-3.5-turbo",
+        model: "gpt-4o",
         messages: updatedMessages.map(msg => ({ role: msg.role, content: msg.content })),
         temperature: 1,
         max_tokens: 4095,
@@ -173,7 +183,10 @@ export default function ChatPage() {
             </form>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
               <button onClick={handleDownload} className="secondary-button" disabled={messages.length === 0}>
-                Download
+                Download Entire Chat
+              </button>
+              <button onClick={handleDownloadLastAIResponse} className="secondary-button" disabled={messages.filter(msg => msg.role === 'assistant').length === 0}>
+                Download Last AI Response
               </button>
               <button onClick={handleClearMessages} className="secondary-button">
                 Clear

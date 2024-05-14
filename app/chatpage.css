@@ -29,8 +29,11 @@ body {
   
   .footer {
     position: sticky;
-    bottom: 20px;
+    bottom: 0;
     width: 100%;
+    background-color: #ffffff; /* Solid background color for the footer */
+    padding: 5px 5px;
+    z-index: 1000; /* Ensure the footer is in front of other elements */
   }
   
   .message-container {
