@@ -3,7 +3,21 @@
 import React, { useState, useEffect } from 'react';
 import OpenAI from 'openai';
 import { saveAs } from 'file-saver';
+import MarkdownIt from 'markdown-it';
+import hljs from 'highlight.js';
+import 'highlight.js/styles/github.css';
 import './globals.css';
+
+const md: MarkdownIt = new MarkdownIt({
+  highlight: (str: string, lang: string) => {
+    if (lang && hljs.getLanguage(lang)) {
+      try {
+        return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code></pre>`;
+      } catch (__) {}
+    }
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
+  }
+});
 
 interface Message {
   role: 'user' | 'assistant';
@@ -67,7 +81,7 @@ export default function ChatPage() {
     const truncatedMessage = lastAIMessage.substring(0, 20).replace(/\s+/g, '_');
     const dateStr = new Date().toISOString().split('T')[0];
     const fileName = `${dateStr}_${truncatedMessage}.txt`;
-  
+
     const blob = new Blob([lastAIMessage], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, fileName);
   };
@@ -149,7 +163,11 @@ export default function ChatPage() {
         {messages.map((message, index) => (
           <div key={index} className={`message-container ${message.role}`}>
             <div className={`message-bubble ${message.role}`}>
-              {message.content}
+              {message.role === 'assistant' ? (
+                <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
+              ) : (
+                message.content
+              )}
             </div>
           </div>
         ))}
@@ -178,18 +196,18 @@ export default function ChatPage() {
                 placeholder="Type your message here..."
               />
               <button type="submit" className="button" disabled={isLoading}>
-                {isLoading ? 'Sending...' : 'Send'}
+                {isLoading ? '⌛' : 'Send 🚀'}
               </button>
             </form>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
               <button onClick={handleDownload} className="secondary-button" disabled={messages.length === 0}>
-                Download Entire Chat
+                💾 Chat
               </button>
               <button onClick={handleDownloadLastAIResponse} className="secondary-button" disabled={messages.filter(msg => msg.role === 'assistant').length === 0}>
-                Download Last AI Response
+                💾 Last Message
               </button>
               <button onClick={handleClearMessages} className="secondary-button">
-                Clear
+                🗑️ Clear
               </button>
             </div>
           </div>
