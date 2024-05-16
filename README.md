@@ -1,36 +1,63 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
-## Getting Started
+# Minimalist Chat App
 
-First, run the development server:
+A simple and minimalist chat application that allows users to communicate with OpenAI's GPT-4. This application requires an OpenAI API key to function.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- **Simple UI**: A clean and minimalist user interface.
+- **Real-time Communication**: Send and receive messages in real-time.
+- **Local Storage of API Key**: Your OpenAI API key is stored locally in your browser.
+- **Download Chat History**: Download the entire chat or the last AI response.
+- **Clear Chat History**: Clear the current chat session.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Installation
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/stancsz/my-chat-app.git
+   cd my-chat-app
+   ```
 
-## Learn More
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-To learn more about Next.js, take a look at the following resources:
+3. **Start the application**:
+   ```bash
+   npm start
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Usage
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1. **Open the application**: Navigate to `http://localhost:3000` in your web browser.
+2. **Enter your OpenAI API Key**: You will be prompted to enter your OpenAI API key. You can get your API key [here](https://platform.openai.com/api-keys).
+3. **Start chatting**: Type your message in the input box and press "Send".
+4. **Download chat history**: Use the "Download Entire Chat" or "Download Last AI Response" buttons to save your chat history.
+5. **Clear chat history**: Use the "Clear" button to clear the current chat session.
 
-## Deploy on Vercel
+## File Structure
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- `favicon.ico`: Icon for the application.
+- `globals.css`: Global CSS styles for the application.
+- `layout.tsx`: Main layout component for the application.
+- `page.tsx`: Main page component where the chat functionality is implemented.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## Contributing
+
+Contributions are welcome! Please fork this repository and submit a pull request with your changes.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Acknowledgements
+
+- [OpenAI](https://www.openai.com) for their GPT-4 API.
+- [React](https://reactjs.org) for the UI framework.
+- [Next.js](https://nextjs.org) for the web development framework.
+
+## Contact
+
+For any questions or feedback, please open an issue on [GitHub](https://github.com/stancsz/my-chat-app/issues).

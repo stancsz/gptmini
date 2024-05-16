@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import OpenAI from 'openai';
 import { saveAs } from 'file-saver';
-import './chatpage.css';
+import './globals.css';
 
 interface Message {
   role: 'user' | 'assistant';

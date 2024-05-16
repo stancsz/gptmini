@@ -1,4 +1,3 @@
-// app/layout.tsx
 import React from 'react';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -9,7 +8,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <header>
             <h1>My Chat App</h1>
           </header>
-          <main>{children}</main> {/* Ensure children are directly inside <main> */}
+          <main>{children}</main>
         </div>
       </body>
     </html>
