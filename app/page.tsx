@@ -8,47 +8,14 @@ import hljs from 'highlight.js';
 import 'highlight.js/styles/github.css';
 import './globals.css';
 
-function copyCode(button: HTMLButtonElement) {
-  const codeBlock = button.nextElementSibling as HTMLElement | null;
-  if (codeBlock) {
-    const code = codeBlock.innerText;
-
-    navigator.clipboard.writeText(code).then(() => {
-      button.innerText = "Copied";
-      setTimeout(() => {
-        button.innerText = "Copy";
-      }, 1000); // Reset button text after 1 second
-    });
-  }
-}
-
-// Extend the Window interface to include the copyCode function
-declare global {
-  interface Window {
-    copyCode: (button: HTMLButtonElement) => void;
-  }
-}
-
-window.copyCode = copyCode;
-
 const md: MarkdownIt = new MarkdownIt({
   highlight: (str: string, lang: string) => {
     if (lang && hljs.getLanguage(lang)) {
       try {
-        return `
-          <pre class="hljs">
-            <button class="copy-button" onclick="window.copyCode(this)">Copy</button>
-            <code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code>
-          </pre>
-        `;
+        return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code></pre>`;
       } catch (__) {}
     }
-    return `
-      <pre class="hljs">
-        <button class="copy-button" onclick="window.copyCode(this)">Copy</button>
-        <code>${md.utils.escapeHtml(str)}</code>
-      </pre>
-    `;
+    return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   }
 });
 
