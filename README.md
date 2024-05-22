@@ -32,6 +32,11 @@ A simple and minimalist chat application that allows users to communicate with O
    npm start
    ```
 
+4. **Build the application**
+   ```bash
+   npx --no-install next build
+   ```
+
 ## Usage
 
 1. **Open the application**: Navigate to `http://localhost:3000` in your web browser.

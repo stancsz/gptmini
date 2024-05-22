@@ -76,13 +76,12 @@ export default function ChatPage() {
     saveAs(blob, fileName);
   };
 
-  const handleDownloadLastAIResponse = () => {
-    const lastAIMessage = messages.filter(msg => msg.role === 'assistant').slice(-1)[0]?.content || 'No AI response found.';
-    const truncatedMessage = lastAIMessage.substring(0, 20).replace(/\s+/g, '_');
+  const handleDownloadLastAIResponse = (messageContent: string) => {
+    const truncatedMessage = messageContent.substring(0, 20).replace(/\s+/g, '_');
     const dateStr = new Date().toISOString().split('T')[0];
     const fileName = `${dateStr}_${truncatedMessage}.txt`;
 
-    const blob = new Blob([lastAIMessage], { type: 'text/plain;charset=utf-8' });
+    const blob = new Blob([messageContent], { type: 'text/plain;charset=utf-8' });
     saveAs(blob, fileName);
   };
 
@@ -168,6 +167,14 @@ export default function ChatPage() {
               ) : (
                 message.content
               )}
+              {message.role === 'assistant' && (
+                <button
+                  className="download-button"
+                  onClick={() => handleDownloadLastAIResponse(message.content)}
+                >
+                  💾
+                </button>
+              )}
             </div>
           </div>
         ))}
@@ -202,9 +209,6 @@ export default function ChatPage() {
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
               <button onClick={handleDownload} className="secondary-button" disabled={messages.length === 0}>
                 💾 Chat
-              </button>
-              <button onClick={handleDownloadLastAIResponse} className="secondary-button" disabled={messages.filter(msg => msg.role === 'assistant').length === 0}>
-                💾 Last Message
               </button>
               <button onClick={handleClearMessages} className="secondary-button">
                 🗑️ Clear

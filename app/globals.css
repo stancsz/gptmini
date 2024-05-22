@@ -150,6 +150,25 @@ body {
   border-radius: 20px;
   word-wrap: break-word;
   overflow-wrap: break-word;
+  position: relative;
+}
+
+.message-bubble .download-button {
+  display: none;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  padding: 5px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.message-bubble:hover .download-button {
+  display: block;
 }
 
 .message-bubble.user {
