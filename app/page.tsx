@@ -13,7 +13,7 @@ const md: MarkdownIt = new MarkdownIt({
     if (lang && hljs.getLanguage(lang)) {
       try {
         return `<pre class="hljs"><code>${hljs.highlight(str, { language: lang, ignoreIllegals: true }).value}</code></pre>`;
-      } catch (__) {}
+      } catch (__) { }
     }
     return `<pre class="hljs"><code>${md.utils.escapeHtml(str)}</code></pre>`;
   }
@@ -162,11 +162,11 @@ export default function ChatPage() {
     const truncatedMessage = firstUserMessage.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_');
     const dateStr = new Date().toISOString().split('T')[0];
     const fileName = `${dateStr}_${truncatedMessage}.json`;
-  
+
     const blob = new Blob([JSON.stringify(chatHistory, null, 2)], { type: 'application/json' });
     saveAs(blob, fileName);
   };
-  
+
   const handleLoadChat = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     if (file) {
@@ -187,10 +187,29 @@ export default function ChatPage() {
       reader.readAsText(file);
     }
   };
-  
+
 
   return (
     <div className="container">
+      <div className="menu-bar">
+        <button className="secondary-button warning">
+          <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+            📂 Load Chat
+          </label>
+          <input
+            type="file"
+            id="upload-json"
+            className="hidden"
+            accept=".json"
+            onChange={handleLoadChat}
+          />
+        </button>
+
+        <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
+          💾 Save Chat (JSON)
+        </button>
+
+      </div>
       <div className="main">
         {messages.map((message, index) => (
           <div key={index} className={`message-container ${message.role}`}>
@@ -239,23 +258,8 @@ export default function ChatPage() {
                 {isLoading ? '⌛' : 'Send 🚀'}
               </button>
             </form>
-            <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-              <button onClick={handleDownloadJSON} className="secondary-button" disabled={messages.length === 0}>
-                💾 Chat (JSON)
-              </button>
-              <button className="secondary-button warning">
-                <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
-                  📂 Load Chat
-                </label>
-                <input
-                  type="file"
-                  id="upload-json"
-                  className="hidden"
-                  accept=".json"
-                  onChange={handleLoadChat}
-                />
-              </button>
-              <button onClick={handleClearMessages} className="secondary-button">
+            <div className="button-wrapper">
+              <button onClick={handleClearMessages} className="clear-button" style={{ marginTop: '10px' }}>
                 🗑️ Clear
               </button>
             </div>
@@ -263,10 +267,10 @@ export default function ChatPage() {
         )}
         {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
         <div className="info-text">
-          This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key 
+          This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key
           <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
             (https://platform.openai.com/api-keys)
-          </a>. Your API key will only be stored locally in your browser. 
+          </a>. Your API key will only be stored locally in your browser.
           <a href="https://github.com/stancsz/my-chat-app" target="_blank" rel="noopener noreferrer">
             View source on GitHub
           </a>
@@ -274,5 +278,5 @@ export default function ChatPage() {
       </div>
     </div>
   );
-  
+
 }

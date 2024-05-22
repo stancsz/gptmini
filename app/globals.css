@@ -59,7 +59,7 @@ body {
 }
 
 .button {
-  background-color: #007bff;
+  background-color: #006AFF;
 }
 
 .button:disabled {
@@ -67,12 +67,26 @@ body {
   cursor: not-allowed;
 }
 
-.secondary-button {
-  background-color: #9fa7ad;
+.button-wrapper {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically, if needed */
+  width: 100%; /* Optional: Ensure the container spans the full width */
+  margin-top: 10px; /* Move the button down from elements above it */
 }
 
-.secondary-button:hover {
-  background-color: #5a6268;
+.clear-button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 20px;
+  color: #fff;
+  background-color: #dc3545; /* Common red color */
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.clear-button:hover {
+  background-color: #c82333; /* Darker red on hover */
 }
 
 .info-text {
@@ -82,7 +96,7 @@ body {
 }
 
 .info-text a {
-  color: #007bff;
+  color: #006AFF;
   text-decoration: none;
 }
 
@@ -158,13 +172,20 @@ body {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: #007bff; /* Change background color to blue */
   color: white;
-  border: none;
+  border: 2px solid #ffffff; /* Add a white border */
   border-radius: 50%;
-  padding: 5px;
+  padding: 10px; /* Increase padding */
   cursor: pointer;
-  font-size: 12px;
+  font-size: 14px; /* Increase font size */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for hover effects */
+}
+
+.message-bubble:hover .download-button {
+  display: block;
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
 }
 
 .message-bubble:hover .download-button {
@@ -172,7 +193,7 @@ body {
 }
 
 .message-bubble.user {
-  background-color: #007bff;
+  background-color: #006AFF;
   color: #fff;
 }
 
@@ -193,13 +214,28 @@ pre {
 }
 
 .secondary-button.warning {
-  background-color: #ffcc00;
+  background-color: #FFA500;
+  color: #fff;
 }
 
 .secondary-button.warning:hover {
-  background-color: #ff9900;
+  background-color: #FF8C00;
 }
 
 .hidden {
   display: none;
+}
+
+.menu-bar {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: #f8f8f8;
+  padding: 10px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.menu-bar button {
+  margin-right: 10px;
 }
