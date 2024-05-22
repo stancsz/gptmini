@@ -158,8 +158,10 @@ export default function ChatPage() {
 
   const handleDownloadJSON = () => {
     const chatHistory = { messages };
+    const firstUserMessage = messages.find(msg => msg.role === 'user')?.content || '';
+    const truncatedMessage = firstUserMessage.substring(0, 30).replace(/[^a-zA-Z0-9]/g, '_');
     const dateStr = new Date().toISOString().split('T')[0];
-    const fileName = `${dateStr}_chat_history.json`;
+    const fileName = `${dateStr}_${truncatedMessage}.json`;
   
     const blob = new Blob([JSON.stringify(chatHistory, null, 2)], { type: 'application/json' });
     saveAs(blob, fileName);
