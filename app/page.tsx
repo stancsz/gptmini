@@ -156,6 +156,37 @@ export default function ChatPage() {
     }
   };
 
+  const handleDownloadJSON = () => {
+    const chatHistory = { messages };
+    const dateStr = new Date().toISOString().split('T')[0];
+    const fileName = `${dateStr}_chat_history.json`;
+  
+    const blob = new Blob([JSON.stringify(chatHistory, null, 2)], { type: 'application/json' });
+    saveAs(blob, fileName);
+  };
+  
+  const handleLoadChat = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const content = e.target?.result as string;
+        const parsed = JSON.parse(content);
+        if (parsed.messages) {
+          if (window.confirm('Are you sure? Unsaved changes will be lost.')) {
+            setMessages(parsed.messages);
+          }
+        } else {
+          alert('Invalid file format.');
+        }
+        // Reset the input value to allow reloading the same file
+        (event.target as HTMLInputElement).value = '';
+      };
+      reader.readAsText(file);
+    }
+  };
+  
+
   return (
     <div className="container">
       <div className="main">
@@ -207,8 +238,20 @@ export default function ChatPage() {
               </button>
             </form>
             <div style={{ display: 'flex', justifyContent: 'space-between', gap: '10px' }}>
-              <button onClick={handleDownload} className="secondary-button" disabled={messages.length === 0}>
-                💾 Chat
+              <button onClick={handleDownloadJSON} className="secondary-button" disabled={messages.length === 0}>
+                💾 Chat (JSON)
+              </button>
+              <button className="secondary-button warning">
+                <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+                  📂 Load Chat
+                </label>
+                <input
+                  type="file"
+                  id="upload-json"
+                  className="hidden"
+                  accept=".json"
+                  onChange={handleLoadChat}
+                />
               </button>
               <button onClick={handleClearMessages} className="secondary-button">
                 🗑️ Clear
@@ -229,4 +272,5 @@ export default function ChatPage() {
       </div>
     </div>
   );
+  
 }
