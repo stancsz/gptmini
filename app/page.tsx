@@ -78,6 +78,11 @@ export default function ChatPage() {
     handleResize();
   }, [inputMessage]);
 
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLTextAreaElement>) => {
+    if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') {
+      handleSend(event as unknown as React.FormEvent);
+    }
+  };
 
   const handleDownload = () => {
     const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
@@ -218,7 +223,7 @@ export default function ChatPage() {
             onChange={handleLoadChat}
           />
         </button>
-  
+
         <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
           💾 Save Chat (JSON)
         </button>
@@ -264,7 +269,8 @@ export default function ChatPage() {
                 className="textarea"
                 value={inputMessage}
                 onChange={handleInputChange}
-                placeholder="Type your message here..."
+                onKeyDown={handleKeyDown} // Add this line
+                placeholder="Type your message here... (Ctrl/Cmd + Enter to send)"
                 rows={1}
                 ref={textareaRef}
                 onInput={handleResize}
