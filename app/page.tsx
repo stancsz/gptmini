@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import OpenAI from 'openai';
 import { saveAs } from 'file-saver';
 import MarkdownIt from 'markdown-it';
@@ -31,6 +31,14 @@ export default function ChatPage() {
   const [isTokenSet, setIsTokenSet] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleResize = () => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
+    }
+  };
 
   useEffect(() => {
     const cachedToken = localStorage.getItem('userToken');
@@ -47,7 +55,7 @@ export default function ChatPage() {
       event.preventDefault();
       event.returnValue = '';
     };
-  
+
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -65,7 +73,11 @@ export default function ChatPage() {
       }
     }
   }, []);
-  
+
+  useEffect(() => {
+    handleResize();
+  }, [inputMessage]);
+
 
   const handleDownload = () => {
     const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
@@ -92,7 +104,7 @@ export default function ChatPage() {
     localStorage.removeItem('chatHistory');
   };
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInputMessage(event.target.value);
   };
 
@@ -206,11 +218,10 @@ export default function ChatPage() {
             onChange={handleLoadChat}
           />
         </button>
-
+  
         <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
           💾 Save Chat (JSON)
         </button>
-
       </div>
       <div className="main">
         {messages.map((message, index) => (
@@ -249,12 +260,14 @@ export default function ChatPage() {
         ) : (
           <div>
             <form className="form" onSubmit={handleSend}>
-              <input
-                type="text"
-                className="input"
+              <textarea
+                className="textarea"
                 value={inputMessage}
                 onChange={handleInputChange}
                 placeholder="Type your message here..."
+                rows={1}
+                ref={textareaRef}
+                onInput={handleResize}
               />
               <button type="submit" className="button" disabled={isLoading}>
                 {isLoading ? '⌛' : 'Send 🚀'}
