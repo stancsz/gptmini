@@ -42,12 +42,12 @@ export default function ChatPage() {
 
   useEffect(() => {
     const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-      const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
+      const chatHistory = JSON.stringify(messages);
       localStorage.setItem('chatHistory', chatHistory);
       event.preventDefault();
       event.returnValue = '';
     };
-
+  
     window.addEventListener('beforeunload', handleBeforeUnload);
     return () => {
       window.removeEventListener('beforeunload', handleBeforeUnload);
@@ -57,13 +57,15 @@ export default function ChatPage() {
   useEffect(() => {
     const savedHistory = localStorage.getItem('chatHistory');
     if (savedHistory) {
-      const savedMessages = savedHistory.split('\n\n').map(line => {
-        const [role, content] = line.split(': ');
-        return { role: role as 'user' | 'assistant', content };
-      });
-      setMessages(savedMessages);
+      try {
+        const savedMessages: Message[] = JSON.parse(savedHistory);
+        setMessages(savedMessages);
+      } catch (error) {
+        console.error('Error parsing chat history from local storage:', error);
+      }
     }
   }, []);
+  
 
   const handleDownload = () => {
     const chatHistory = messages.map(msg => `${msg.role}: ${msg.content}`).join('\n\n');
