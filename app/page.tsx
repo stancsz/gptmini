@@ -22,7 +22,6 @@ const md: MarkdownIt = new MarkdownIt({
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  timestamp: string;
 }
 
 export default function ChatPage() {
@@ -141,8 +140,7 @@ export default function ChatPage() {
 
     setIsLoading(true);
 
-    const newMessage: Message = { role: 'user', content: inputMessage, timestamp: new Date().toLocaleString() };
-    const updatedMessages: Message[] = [...messages, newMessage];
+    const updatedMessages: Message[] = [...messages, { role: 'user', content: inputMessage }];
     setMessages(updatedMessages);
     setInputMessage('');
 
@@ -166,14 +164,10 @@ export default function ChatPage() {
       });
 
       if (response.choices && response.choices.length > 0) {
-        const aiMessage: Message = {
-          role: 'assistant',
-          content: response.choices[0].message?.content || '',
-          timestamp: new Date().toLocaleString()
-        };
+        const aiMessage: Message = { role: 'assistant', content: response.choices[0].message?.content || '' };
         setMessages(prev => [...prev, aiMessage]);
       } else {
-        setMessages(prev => [...prev, { role: 'assistant', content: 'No response from AI', timestamp: new Date().toLocaleString() }]);
+        setMessages(prev => [...prev, { role: 'assistant', content: 'No response from AI' }]);
       }
     } catch (error: any) {
       console.error('Error fetching response:', error);
@@ -261,9 +255,6 @@ export default function ChatPage() {
               >
                 ❌
               </button>
-              <div className="timestamp">
-                {message.timestamp}
-              </div>
             </div>
           </div>
         ))}
