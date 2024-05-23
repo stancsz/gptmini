@@ -241,20 +241,22 @@ export default function ChatPage() {
           <div key={index} className={`message-container ${message.role}`}>
             <div className={`message-bubble ${message.role}`}>
               <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
-              {message.role === 'assistant' && (
+              <div className="button-container">
+                {message.role === 'assistant' && (
+                  <button
+                    className="download-button square-button"
+                    onClick={() => handleDownloadLastAIResponse(message.content)}
+                  >
+                    💾
+                  </button>
+                )}
                 <button
-                  className="download-button square-button"
-                  onClick={() => handleDownloadLastAIResponse(message.content)}
+                  className="delete-button square-button"
+                  onClick={() => handleDeleteMessage(index)}
                 >
-                  💾
+                  ❌
                 </button>
-              )}
-              <button
-                className="delete-button"
-                onClick={() => handleDeleteMessage(index)}
-              >
-                ❌
-              </button>
+              </div>
             </div>
           </div>
         ))}
@@ -279,7 +281,7 @@ export default function ChatPage() {
                 className="textarea"
                 value={inputMessage}
                 onChange={handleInputChange}
-                onKeyDown={handleKeyDown} // Add this line
+                onKeyDown={handleKeyDown}
                 placeholder="Type your message here... (Ctrl/Cmd + Enter to send)"
                 rows={1}
                 ref={textareaRef}

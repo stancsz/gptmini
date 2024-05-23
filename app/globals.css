@@ -181,25 +181,35 @@ body {
 }
 
 .message-bubble {
+  position: relative;
   max-width: 75%;
   padding: 10px;
   border-radius: 15px;
   word-wrap: break-word;
   overflow-wrap: break-word;
-  position: relative;
 }
 
-.message-bubble .download-button {
-  display: none;
+.button-container {
   position: absolute;
   bottom: 5px;
   right: 5px;
-  background-color: #007bff;
+  display: none;
+  gap: 5px; /* Space between the buttons */
+}
+
+.message-bubble:hover .button-container {
+  display: flex;
+}
+
+.message-bubble .download-button,
+.message-bubble .delete-button {
+  background-color: #007bff; /* Default to blue */
   color: white;
   border: 2px solid #ffffff;
   border-radius: 30%;
   width: 25px;
   height: 25px;
+  display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
@@ -208,44 +218,28 @@ body {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-.message-bubble:hover .download-button {
-  display: block;
-  transform: scale(1.1);
-  /* Slightly enlarge the button on hover */
+.message-bubble .download-button {
+  background-color: #007bff; /* Blue for download */
 }
-
-.message-bubble:hover .download-button {
-  display: block;
-}
-
 
 .message-bubble .delete-button {
-  display: none;
-  position: absolute;
-  top: 5px;
-  right: 5px;
-  background-color: #ffcccc;
-  /* Lighter red color */
-  color: #ff0000;
-  /* Red color for the cross */
-  border: 2px solid #ffffff;
-  border-radius: 30%;
-  width: 25px;
-  height: 25px;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  font-size: 15px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease, transform 0.3s ease;
+  background-color: #ffcccc; /* Lighter red color */
+  color: #ff0000; /* Red color for the cross */
 }
 
+.message-bubble:hover .download-button,
 .message-bubble:hover .delete-button {
-  display: flex;
-  transform: scale(1.1);
-  /* Slightly enlarge the button on hover */
+  transform: scale(1.1); /* Slightly enlarge the button on hover */
 }
 
+/* Adjust individual button hover states */
+.message-bubble:hover .download-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.message-bubble:hover .delete-button:hover {
+  background-color: #ff8c8c; /* Darker red on hover */
+}
 
 .message-bubble.user {
   background-color: #006AFF;
