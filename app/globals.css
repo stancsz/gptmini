@@ -60,18 +60,21 @@ body {
 
 .button {
   padding: 10px 20px;
-  height: 40px; /* Fix the height of the button */
+  height: 40px;
+  /* Fix the height of the button */
   border: none;
   background-color: #007bff;
   color: white;
   border-radius: 15px;
   cursor: pointer;
   font-size: 16px;
-  flex-shrink: 0; /* Prevent button from shrinking */
+  flex-shrink: 0;
+  /* Prevent button from shrinking */
   display: flex;
   align-items: center;
   justify-content: center;
-  align-self: flex-end; /* Align the button to the bottom */
+  align-self: flex-end;
+  /* Align the button to the bottom */
 
 }
 
@@ -82,10 +85,14 @@ body {
 
 .button-wrapper {
   display: flex;
-  justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically, if needed */
-  width: 100%; /* Optional: Ensure the container spans the full width */
-  margin-top: 10px; /* Move the button down from elements above it */
+  justify-content: center;
+  /* Center horizontally */
+  align-items: center;
+  /* Center vertically, if needed */
+  width: 100%;
+  /* Optional: Ensure the container spans the full width */
+  margin-top: 10px;
+  /* Move the button down from elements above it */
 }
 
 .clear-button {
@@ -93,13 +100,15 @@ body {
   border: none;
   border-radius: 15px;
   color: #fff;
-  background-color: #dc3545; /* Common red color */
+  background-color: #dc3545;
+  /* Common red color */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .clear-button:hover {
-  background-color: #c82333; /* Darker red on hover */
+  background-color: #c82333;
+  /* Darker red on hover */
 }
 
 .info-text {
@@ -121,12 +130,12 @@ body {
   --max-width: 1100px;
   --border-radius: 12px;
   --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-      "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-      "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
   --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-      "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-      "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-      "Noto Color Emoji";
+    "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
 }
 
 .page-container {
@@ -201,12 +210,42 @@ body {
 
 .message-bubble:hover .download-button {
   display: block;
-  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  transform: scale(1.1);
+  /* Slightly enlarge the button on hover */
 }
 
 .message-bubble:hover .download-button {
   display: block;
 }
+
+
+.message-bubble .delete-button {
+  display: none;
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  background-color: #ffcccc;
+  /* Lighter red color */
+  color: #ff0000;
+  /* Red color for the cross */
+  border: 2px solid #ffffff;
+  border-radius: 30%;
+  width: 25px;
+  height: 25px;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.message-bubble:hover .delete-button {
+  display: flex;
+  transform: scale(1.1);
+  /* Slightly enlarge the button on hover */
+}
+
 
 .message-bubble.user {
   background-color: #006AFF;
@@ -225,8 +264,10 @@ body {
 
 pre {
   max-width: 100%;
-  white-space: pre-wrap; /* Wrap long lines */
-  word-wrap: break-word; /* Wrap long lines */
+  white-space: pre-wrap;
+  /* Wrap long lines */
+  word-wrap: break-word;
+  /* Wrap long lines */
 }
 
 .secondary-button.warning {
@@ -258,18 +299,21 @@ pre {
 
 
 .textarea {
-  flex-grow: 1; /* Allow textarea to grow */
+  flex-grow: 1;
+  /* Allow textarea to grow */
   width: 100%;
   padding: 10px;
   border: 1px solid #ccc;
-  border-radius: 15px; /* Make edges rounder */
+  border-radius: 15px;
+  /* Make edges rounder */
   resize: none;
   overflow: hidden;
   box-sizing: border-box;
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
-  margin-right: 10px; /* Add some space between textarea and button */
+  margin-right: 10px;
+  /* Add some space between textarea and button */
 }
 
 

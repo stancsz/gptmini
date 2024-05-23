@@ -104,6 +104,11 @@ export default function ChatPage() {
     saveAs(blob, fileName);
   };
 
+  const handleDeleteMessage = (index: number) => {
+    setMessages(prevMessages => prevMessages.filter((_, i) => i !== index));
+  };
+
+
   const handleClearMessages = () => {
     setMessages([]);
     localStorage.removeItem('chatHistory');
@@ -132,22 +137,22 @@ export default function ChatPage() {
   const handleSend = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!inputMessage.trim() || !userToken) return;
-  
+
     setIsLoading(true);
-  
+
     const updatedMessages: Message[] = [...messages, { role: 'user', content: inputMessage }];
     setMessages(updatedMessages);
     setInputMessage('');
-  
+
     const userMessages = updatedMessages.filter(msg => msg.role === 'user');
     const lastFiveUserMessages = userMessages.slice(-5);
-  
+
     try {
       const openai = new OpenAI({
         apiKey: userToken,
         dangerouslyAllowBrowser: true,
       });
-  
+
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
         messages: lastFiveUserMessages.map(msg => ({ role: msg.role, content: msg.content })),
@@ -157,7 +162,7 @@ export default function ChatPage() {
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-  
+
       if (response.choices && response.choices.length > 0) {
         const aiMessage: Message = { role: 'assistant', content: response.choices[0].message?.content || '' };
         setMessages(prev => [...prev, aiMessage]);
@@ -248,6 +253,12 @@ export default function ChatPage() {
                   💾
                 </button>
               )}
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteMessage(index)}
+              >
+                ❌
+              </button>
             </div>
           </div>
         ))}
