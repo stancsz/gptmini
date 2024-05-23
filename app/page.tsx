@@ -246,11 +246,7 @@ export default function ChatPage() {
         {messages.map((message, index) => (
           <div key={index} className={`message-container ${message.role}`}>
             <div className={`message-bubble ${message.role}`}>
-              {message.role === 'assistant' ? (
-                <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
-              ) : (
-                message.content
-              )}
+              <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
               {message.role === 'assistant' && (
                 <button
                   className="download-button square-button"
