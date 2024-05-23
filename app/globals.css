@@ -257,6 +257,20 @@ body {
   color: #333;
 }
 
+.message-bubble .timestamp {
+  display: none;
+  position: absolute;
+  bottom: -20px; /* Adjust as needed to position below the message */
+  left: 5px;
+  font-size: 12px;
+  color: grey;
+}
+
+.message-bubble:hover .timestamp {
+  display: block;
+}
+
+
 /* Ensure preformatted content does not overflow */
 .hljs {
   overflow-x: auto;
