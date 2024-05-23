@@ -203,28 +203,19 @@ body {
 
 .message-bubble .download-button,
 .message-bubble .delete-button {
-  background-color: #007bff; /* Default to blue */
+  background-color: #ffffff; /* Default to blue */
   color: white;
-  border: 2px solid #ffffff;
-  border-radius: 30%;
-  width: 25px;
-  height: 25px;
+  border: 1px solid #ccc;
+  border-radius: 25%;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 15px;
+  font-size: 12px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: background-color 0.3s ease, transform 0.3s ease;
-}
-
-.message-bubble .download-button {
-  background-color: #007bff; /* Blue for download */
-}
-
-.message-bubble .delete-button {
-  background-color: #ffcccc; /* Lighter red color */
-  color: #ff0000; /* Red color for the cross */
 }
 
 .message-bubble:hover .download-button,
@@ -233,12 +224,9 @@ body {
 }
 
 /* Adjust individual button hover states */
-.message-bubble:hover .download-button:hover {
-  background-color: #0056b3; /* Darker blue on hover */
-}
-
+.message-bubble:hover .download-button:hover,
 .message-bubble:hover .delete-button:hover {
-  background-color: #ff8c8c; /* Darker red on hover */
+  background-color: #ccc; /* Darker red on hover */
 }
 
 .message-bubble.user {
