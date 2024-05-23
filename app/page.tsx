@@ -239,7 +239,7 @@ export default function ChatPage() {
               )}
               {message.role === 'assistant' && (
                 <button
-                  className="download-button"
+                  className="download-button square-button"
                   onClick={() => handleDownloadLastAIResponse(message.content)}
                 >
                   💾
