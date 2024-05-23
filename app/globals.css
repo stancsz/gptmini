@@ -278,13 +278,21 @@ pre {
 }
 
 .menu-bar {
+  width: 500px;
+  position: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: #f8f8f8;
   padding: 10px;
-  border-radius: 15px;
+  border-radius: 20px;
   margin-bottom: 20px;
+  z-index: 1000;
+  top: 3%;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .menu-bar button {
