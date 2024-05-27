@@ -136,13 +136,26 @@ export default function ChatPage() {
 
   const handleSend = async (event: React.FormEvent) => {
     event.preventDefault();
-    if (!inputMessage.trim() || !userToken) return;
+    let contentToSend = inputMessage.trim();
+    
+    if (!contentToSend) {
+      const lastUserMessage = messages.slice().reverse().find(msg => msg.role === 'user');
+      if (lastUserMessage) {
+        contentToSend = lastUserMessage.content;
+      }
+    }
+    
+    if (!contentToSend || !userToken) return;
   
     setIsLoading(true);
   
-    const updatedMessages: Message[] = [...messages, { role: 'user', content: inputMessage }];
-    setMessages(updatedMessages);
-    setInputMessage('');
+    let updatedMessages: Message[] = messages;
+  
+    if (inputMessage.trim()) {
+      updatedMessages = [...messages, { role: 'user', content: contentToSend }];
+      setMessages(updatedMessages);
+      setInputMessage('');
+    }
   
     const messagesToSend = updatedMessages.slice(-3);
   
@@ -154,7 +167,10 @@ export default function ChatPage() {
   
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: messagesToSend.map(msg => ({ role: msg.role, content: msg.content })),
+        messages: messagesToSend.map(msg => ({
+          role: msg.role,
+          content: msg.content,
+        })),
         temperature: 1,
         max_tokens: 4095,
         top_p: 1,
