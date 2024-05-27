@@ -137,35 +137,34 @@ export default function ChatPage() {
   const handleSend = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!inputMessage.trim() || !userToken) return;
-  
+
     setIsLoading(true);
-  
+
     const updatedMessages: Message[] = [...messages, { role: 'user', content: inputMessage }];
     setMessages(updatedMessages);
     setInputMessage('');
-  
-    const messagesToSend = updatedMessages.slice(-3);
-  
+
+    const userMessages = updatedMessages.filter(msg => msg.role === 'user');
+    const lastFiveUserMessages = userMessages.slice(-5);
+
     try {
       const openai = new OpenAI({
         apiKey: userToken,
         dangerouslyAllowBrowser: true,
       });
-  
+
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: messagesToSend.map(msg => ({ role: msg.role, content: msg.content })),
+        messages: lastFiveUserMessages.map(msg => ({ role: msg.role, content: msg.content })),
         temperature: 1,
         max_tokens: 4095,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
       });
-  
+
       if (response.choices && response.choices.length > 0) {
-        const aiMessageContent = response.choices[0].message?.content || '';
-        const truncatedAiMessageContent = aiMessageContent.substring(0, 200);
-        const aiMessage: Message = { role: 'assistant', content: truncatedAiMessageContent };
+        const aiMessage: Message = { role: 'assistant', content: response.choices[0].message?.content || '' };
         setMessages(prev => [...prev, aiMessage]);
       } else {
         setMessages(prev => [...prev, { role: 'assistant', content: 'No response from AI' }]);
