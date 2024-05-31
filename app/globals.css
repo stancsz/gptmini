@@ -214,11 +214,10 @@ body {
 
 /* Button Container */
 .button-container {
-  position: absolute;
-  bottom: 5px;
-  right: 5px;
-  display: none;
-  gap: 5px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
 }
 
 .message-bubble:hover .button-container {
@@ -299,7 +298,7 @@ pre {
 /* Menu Toggle Button */
 .menu-toggle {
   background: none;
-  border: 1px solid #ccc;
+  border: 0.5px solid #ccc;
   border-radius: 15px;
   cursor: pointer;
   padding: 8px;

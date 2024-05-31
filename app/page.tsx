@@ -290,24 +290,26 @@ export default function ChatPage() {
               </button>
             </form>
             <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
-              <button className="secondary-button warning">
-                <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
-                  📂 Load Chat
-                </label>
-                <input
-                  type="file"
-                  id="upload-json"
-                  className="hidden"
-                  accept=".json"
-                  onChange={handleLoadChat}
-                />
-              </button>
-              <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
-                💾 Save Chat (JSON)
-              </button>
-              <button onClick={handleClearMessages} className="clear-button" style={{ marginTop: '10px' }}>
-                🗑️ Clear
-              </button>
+              <div className="button-container">
+                <button onClick={handleClearMessages} className="button">
+                  📄 New
+                </button>
+                <button className="button">
+                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+                    📂 Load
+                  </label>
+                  <input
+                    type="file"
+                    id="upload-json"
+                    className="hidden"
+                    accept=".json"
+                    onChange={handleLoadChat}
+                  />
+                </button>
+                <button onClick={handleDownloadJSON} className="button" disabled={messages.length === 0}>
+                  💾 Save
+                </button>
+              </div>
             </div>
           </div>
         )}
