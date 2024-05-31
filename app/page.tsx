@@ -264,7 +264,10 @@ export default function ChatPage() {
           </form>
         ) : (
           <div className="form-container">
-            <form className="form" onSubmit={handleSend}>
+            <form className="form" onSubmit={(event) => {
+              handleSend(event);
+              setMenuVisible(false); // Hide menu after sending
+            }}>
               <button type="button" className="menu-toggle" onClick={toggleMenu}>
                 <svg width="20" height="20" viewBox="0 0 30 20" fill="black" xmlns="http://www.w3.org/2000/svg">
                   <rect width="30" height="3"></rect>
@@ -292,18 +295,27 @@ export default function ChatPage() {
             </form>
             <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
               <div className="menu-button-container">
-                <button onClick={handleClearMessages} className="button">📄 New</button>
+                <button onClick={() => { handleClearMessages(); setMenuVisible(false); }} className="button">
+                  📄 New
+                </button>
                 <button className="button">
-                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>📂 Load</label>
+                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+                    📂 Load
+                  </label>
                   <input
                     type="file"
                     id="upload-json"
                     className="hidden"
                     accept=".json"
-                    onChange={handleLoadChat}
+                    onChange={(event) => { handleLoadChat(event); setMenuVisible(false); }}
                   />
                 </button>
-                <button onClick={handleDownloadJSON} className="button" disabled={messages.length === 0}>💾 Save</button>
+                <button onClick={() => { handleDownloadJSON(); setMenuVisible(false); }} className="button" disabled={messages.length === 0}>
+                  💾 Save
+                </button>
+                <button onClick={() => setMenuVisible(false)} className="button close-button">
+                  ❌ Close
+                </button>
               </div>
             </div>
           </div>
