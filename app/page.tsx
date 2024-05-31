@@ -218,24 +218,6 @@ export default function ChatPage() {
 
   return (
     <div className="container">
-      <div className="menu-bar">
-        <button className="secondary-button warning">
-          <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
-            📂 Load Chat
-          </label>
-          <input
-            type="file"
-            id="upload-json"
-            className="hidden"
-            accept=".json"
-            onChange={handleLoadChat}
-          />
-        </button>
-
-        <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
-          💾 Save Chat (JSON)
-        </button>
-      </div>
       <div className="main">
         {messages.map((message, index) => (
           <div key={index} className={`message-container ${message.role}`}>
@@ -293,7 +275,25 @@ export default function ChatPage() {
                 </svg>}
               </button>
             </form>
-            <div className="button-wrapper">
+
+            <div className="menu-bar">
+              <button className="secondary-button warning">
+                <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+                  📂 Load Chat
+                </label>
+                <input
+                  type="file"
+                  id="upload-json"
+                  className="hidden"
+                  accept=".json"
+                  onChange={handleLoadChat}
+                />
+              </button>
+
+              <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
+                💾 Save Chat (JSON)
+              </button>
+
               <button onClick={handleClearMessages} className="clear-button" style={{ marginTop: '10px' }}>
                 🗑️ Clear
               </button>
@@ -313,5 +313,6 @@ export default function ChatPage() {
       </div>
     </div>
   );
+
 
 }
