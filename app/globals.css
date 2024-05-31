@@ -253,6 +253,7 @@ body {
 
 /* Individual Buttons */
 .message-bubble .download-button,
+.message-bubble .fold-button,
 .message-bubble .delete-button {
   background-color: #ccc;
   color: white;
@@ -269,11 +270,13 @@ body {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.message-bubble:hover .fold-button,
 .message-bubble:hover .download-button,
 .message-bubble:hover .delete-button {
   transform: scale(1.1);
 }
 
+.message-bubble:hover .fold-button,
 .message-bubble:hover .download-button:hover,
 .message-bubble:hover .delete-button:hover {
   background-color: #ffffff;

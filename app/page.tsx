@@ -22,6 +22,7 @@ const md: MarkdownIt = new MarkdownIt({
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  isFolded?: boolean;
 }
 
 export default function ChatPage() {
@@ -108,7 +109,6 @@ export default function ChatPage() {
   const handleDeleteMessage = (index: number) => {
     setMessages(prevMessages => prevMessages.filter((_, i) => i !== index));
   };
-
 
   const handleClearMessages = () => {
     setMessages([]);
@@ -220,34 +220,54 @@ export default function ChatPage() {
     setMenuVisible(!menuVisible);
   };
 
-
+  const toggleFold = (index: number) => {
+    setMessages(prevMessages =>
+      prevMessages.map((message, i) => {
+        if (i === index) {
+          return { ...message, isFolded: !message.isFolded };
+        }
+        return message;
+      })
+    );
+  };
 
   return (
     <div className="container">
       <div className="main">
-        {messages.map((message, index) => (
-          <div key={index} className={`message-container ${message.role}`}>
-            <div className={`message-bubble ${message.role}`}>
-              <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
-              <div className="button-container">
-                {message.role === 'assistant' && (
+        {messages.map((message, index) => {
+          const isFolded = message.isFolded ?? false;
+          const displayContent = isFolded ? `${message.content.substring(0, 150)}...` : message.content;
+
+          return (
+            <div key={index} className={`message-container ${message.role}`}>
+              <div className={`message-bubble ${message.role}`}>
+                <div dangerouslySetInnerHTML={{ __html: md.render(displayContent) }} />
+                <div className="button-container">
                   <button
-                    className="download-button square-button"
-                    onClick={() => handleDownloadLastAIResponse(message.content)}
+                    className="fold-button square-button"
+                    onClick={() => toggleFold(index)}
                   >
-                    💾
+                    {isFolded ? '🔽' : '🔼'}
                   </button>
-                )}
-                <button
-                  className="delete-button square-button"
-                  onClick={() => handleDeleteMessage(index)}
-                >
-                  ❌
-                </button>
+                  {message.role === 'assistant' && (
+                    <button
+                      className="download-button square-button"
+                      onClick={() => handleDownloadLastAIResponse(message.content)}
+                    >
+                      💾
+                    </button>
+                  )}
+                  <button
+                    className="delete-button square-button"
+                    onClick={() => handleDeleteMessage(index)}
+                  >
+                    ❌
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="footer">
         {!isTokenSet ? (
@@ -322,7 +342,7 @@ export default function ChatPage() {
         )}
         {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
         <div className="info-text">
-          This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key
+          This minimalist chat app lets you talk to GPT-4o. To use it, you'll need your OpenAI API key
           <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
             (https://platform.openai.com/api-keys)
           </a>. Your API key will only be stored locally in your browser.
@@ -333,6 +353,4 @@ export default function ChatPage() {
       </div>
     </div>
   );
-
-
 }
