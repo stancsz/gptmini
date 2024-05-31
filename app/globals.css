@@ -1,3 +1,4 @@
+/* General Styles */
 body {
   font-family: Arial, sans-serif;
   background-color: #f5f5f5;
@@ -7,6 +8,20 @@ body {
   box-sizing: border-box;
 }
 
+/* Root Variables */
+:root {
+  --max-width: 1100px;
+  --border-radius: 12px;
+  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
+    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
+    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+}
+
+/* Container Styles */
 .container {
   display: flex;
   flex-direction: column;
@@ -16,16 +31,18 @@ body {
   padding: 20px;
   min-height: 100vh;
   background-color: #fff;
-  border-radius: 15px;
+  border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Main Content */
 .main {
   flex: 1;
   overflow-y: auto;
   margin-bottom: 20px;
 }
 
+/* Footer Styles */
 .footer {
   position: sticky;
   bottom: 0;
@@ -35,11 +52,31 @@ body {
   z-index: 1000;
 }
 
+/* Form Styles */
 .form {
   display: flex;
-  margin-bottom: 10px;
+  align-items: center; /* Align items at the bottom */
+  width: 100%;
+  position: relative;
+  gap: 10px; /* Add space between the elements */
+  /* Remove any bottom padding or margin */
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+/* Form Container */
+.form-container {
+  border: 1px solid #ccc; /* Add a border around the div */
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
+  /* Remove or reduce padding-bottom to minimize gap */
+  padding-bottom: 0px; /* Adjust this value as needed */
 }
 
+/* Input Styles */
 .input {
   flex: 1;
   padding: 10px;
@@ -48,6 +85,7 @@ body {
   margin-right: 10px;
 }
 
+/* Button Styles */
 .button,
 .secondary-button {
   padding: 10px 20px;
@@ -59,23 +97,16 @@ body {
 }
 
 .button {
-  padding: 10px 20px;
   height: 40px;
-  /* Fix the height of the button */
-  border: none;
   background-color: #007bff;
   color: white;
-  border-radius: 15px;
-  cursor: pointer;
+  border-radius: 40px;
   font-size: 16px;
   flex-shrink: 0;
-  /* Prevent button from shrinking */
   display: flex;
-  align-items: center;
+  align-items: center; /* Center the text vertically */
   justify-content: center;
-  align-self: flex-end;
-  /* Align the button to the bottom */
-
+  align-self: center; /* Align the button in the center vertically */
 }
 
 .button:disabled {
@@ -83,34 +114,40 @@ body {
   cursor: not-allowed;
 }
 
+.secondary-button.warning {
+  background-color: #FFA500;
+  color: #fff;
+}
+
+.secondary-button.warning:hover {
+  background-color: #FF8C00;
+}
+
+/* Button Wrapper */
 .button-wrapper {
   display: flex;
   justify-content: center;
-  /* Center horizontally */
   align-items: center;
-  /* Center vertically, if needed */
   width: 100%;
-  /* Optional: Ensure the container spans the full width */
   margin-top: 10px;
-  /* Move the button down from elements above it */
 }
 
+/* Clear Button */
 .clear-button {
   padding: 10px 20px;
   border: none;
   border-radius: 15px;
   color: #fff;
   background-color: #dc3545;
-  /* Common red color */
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .clear-button:hover {
   background-color: #c82333;
-  /* Darker red on hover */
 }
 
+/* Info Text */
 .info-text {
   margin-top: 20px;
   font-size: 0.8rem;
@@ -126,18 +163,7 @@ body {
   text-decoration: underline;
 }
 
-:root {
-  --max-width: 1100px;
-  --border-radius: 12px;
-  --font-mono: ui-monospace, Menlo, Monaco, "Cascadia Mono", "Segoe UI Mono",
-    "Roboto Mono", "Oxygen Mono", "Ubuntu Monospace", "Source Code Pro",
-    "Fira Mono", "Droid Sans Mono", "Courier New", monospace;
-  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
-    "Segoe UI", "Helvetica Neue", Arial, "Noto Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
-    "Noto Color Emoji";
-}
-
+/* Page Container */
 .page-container {
   display: flex;
   flex-direction: column;
@@ -149,24 +175,28 @@ body {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* Page Header */
 .page-header {
   margin-bottom: 20px;
   font-size: 2rem;
   text-align: center;
 }
 
+/* Page Content */
 .page-content {
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
+/* Page Footer */
 .page-footer {
   text-align: center;
   font-size: 0.875rem;
   color: #6c757d;
 }
 
+/* Message Container */
 .message-container {
   display: flex;
   margin-bottom: 10px;
@@ -180,6 +210,7 @@ body {
   justify-content: flex-start;
 }
 
+/* Message Bubble */
 .message-bubble {
   position: relative;
   max-width: 75%;
@@ -189,21 +220,42 @@ body {
   overflow-wrap: break-word;
 }
 
+.message-bubble.user {
+  background-color: #006AFF;
+  color: #fff;
+}
+
+.message-bubble.assistant {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+/* Button Container */
 .button-container {
   position: absolute;
   bottom: 5px;
-  right: 5px;
+  right: 10px;
   display: none;
   gap: 5px; /* Space between the buttons */
+}
+
+.menu-button-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  gap: 10px;
 }
 
 .message-bubble:hover .button-container {
   display: flex;
 }
 
+/* Individual Buttons */
 .message-bubble .download-button,
+.message-bubble .fold-button,
 .message-bubble .delete-button {
-  background-color: #ffffff; /* Default to blue */
+  background-color: #ccc;
   color: white;
   border: 1px solid #ccc;
   border-radius: 25%;
@@ -218,28 +270,19 @@ body {
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
+.message-bubble:hover .fold-button,
 .message-bubble:hover .download-button,
 .message-bubble:hover .delete-button {
-  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  transform: scale(1.1);
 }
 
-/* Adjust individual button hover states */
+.message-bubble:hover .fold-button,
 .message-bubble:hover .download-button:hover,
 .message-bubble:hover .delete-button:hover {
-  background-color: #ccc; /* Darker red on hover */
+  background-color: #ffffff;
 }
 
-.message-bubble.user {
-  background-color: #006AFF;
-  color: #fff;
-}
-
-.message-bubble.assistant {
-  background-color: #f5f5f5;
-  color: #333;
-}
-
-/* Ensure preformatted content does not overflow */
+/* Preformatted Content */
 .hljs {
   overflow-x: auto;
 }
@@ -247,55 +290,16 @@ body {
 pre {
   max-width: 100%;
   white-space: pre-wrap;
-  /* Wrap long lines */
   word-wrap: break-word;
-  /* Wrap long lines */
 }
 
-.secondary-button.warning {
-  background-color: #FFA500;
-  color: #fff;
-}
-
-.secondary-button.warning:hover {
-  background-color: #FF8C00;
-}
-
-.hidden {
-  display: none;
-}
-
-.menu-bar {
-  width: 500px;
-  position: fixed;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: #f8f8f8;
-  padding: 10px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  z-index: 1000;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-
-}
-
-.menu-bar button {
-  margin-right: 10px;
-}
-
-
+/* Textarea Styles */
 .textarea {
   flex-grow: 1;
-  /* Allow textarea to grow */
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  /* Make edges rounder */
+  border: none; /* Remove border */
+  border-radius: 0; /* Remove border radius */
   resize: none;
   overflow: hidden;
   box-sizing: border-box;
@@ -303,10 +307,13 @@ pre {
   font-size: inherit;
   line-height: inherit;
   margin-right: 10px;
-  /* Add some space between textarea and button */
+  background-color: transparent; /* Make background transparent */
+  outline: none; /* Remove focus outline */
+  box-shadow: none; /* Remove any potential shadow */
+  color: inherit; /* Inherit text color */
 }
 
-
+/* Square Button */
 .square-button {
   width: 40px;
   height: 40px;
@@ -315,4 +322,54 @@ pre {
   align-items: center;
   justify-content: center;
   border-radius: 8px;
+}
+
+/* Hidden Element */
+.hidden {
+  display: none;
+}
+
+/* Menu Toggle Button */
+.menu-toggle {
+  background: none;
+  border: 0.5px solid #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
+  align-self: center; /* Align the button in the center vertically */
+}
+
+/* Button Styles */
+.button,
+.menu-toggle {
+  flex-shrink: 0;
+  margin-bottom: 10px; /* Ensure buttons stay at the bottom */
+}
+
+.menu-toggle svg path {
+  fill: black;
+}
+
+/* Menu Bar */
+.menu-bar {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  bottom: 60px;
+  left: 10px; /* Adjust as needed */
+  background: #fff;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-bar.show {
+  display: flex;
 }

@@ -22,6 +22,7 @@ const md: MarkdownIt = new MarkdownIt({
 interface Message {
   role: 'user' | 'assistant';
   content: string;
+  isFolded?: boolean;
 }
 
 export default function ChatPage() {
@@ -32,6 +33,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handleResize = () => {
     if (textareaRef.current) {
@@ -107,7 +109,6 @@ export default function ChatPage() {
   const handleDeleteMessage = (index: number) => {
     setMessages(prevMessages => prevMessages.filter((_, i) => i !== index));
   };
-
 
   const handleClearMessages = () => {
     setMessages([]);
@@ -215,51 +216,58 @@ export default function ChatPage() {
     }
   };
 
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+  const toggleFold = (index: number) => {
+    setMessages(prevMessages =>
+      prevMessages.map((message, i) => {
+        if (i === index) {
+          return { ...message, isFolded: !message.isFolded };
+        }
+        return message;
+      })
+    );
+  };
 
   return (
     <div className="container">
-      <div className="menu-bar">
-        <button className="secondary-button warning">
-          <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
-            📂 Load Chat
-          </label>
-          <input
-            type="file"
-            id="upload-json"
-            className="hidden"
-            accept=".json"
-            onChange={handleLoadChat}
-          />
-        </button>
-
-        <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
-          💾 Save Chat (JSON)
-        </button>
-      </div>
       <div className="main">
-        {messages.map((message, index) => (
-          <div key={index} className={`message-container ${message.role}`}>
-            <div className={`message-bubble ${message.role}`}>
-              <div dangerouslySetInnerHTML={{ __html: md.render(message.content) }} />
-              <div className="button-container">
-                {message.role === 'assistant' && (
+        {messages.map((message, index) => {
+          const isFolded = message.isFolded ?? false;
+          const displayContent = isFolded ? `${message.content.substring(0, 150)}...` : message.content;
+
+          return (
+            <div key={index} className={`message-container ${message.role}`}>
+              <div className={`message-bubble ${message.role}`}>
+                <div dangerouslySetInnerHTML={{ __html: md.render(displayContent) }} />
+                <div className="button-container">
                   <button
-                    className="download-button square-button"
-                    onClick={() => handleDownloadLastAIResponse(message.content)}
+                    className="fold-button square-button"
+                    onClick={() => toggleFold(index)}
                   >
-                    💾
+                    {isFolded ? '🔽' : '🔼'}
                   </button>
-                )}
-                <button
-                  className="delete-button square-button"
-                  onClick={() => handleDeleteMessage(index)}
-                >
-                  ❌
-                </button>
+                  {message.role === 'assistant' && (
+                    <button
+                      className="download-button square-button"
+                      onClick={() => handleDownloadLastAIResponse(message.content)}
+                    >
+                      💾
+                    </button>
+                  )}
+                  <button
+                    className="delete-button square-button"
+                    onClick={() => handleDeleteMessage(index)}
+                  >
+                    ❌
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
       <div className="footer">
         {!isTokenSet ? (
@@ -275,8 +283,18 @@ export default function ChatPage() {
             <button type="submit" className="button">Save Token</button>
           </form>
         ) : (
-          <div>
-            <form className="form" onSubmit={handleSend}>
+          <div className="form-container">
+            <form className="form" onSubmit={(event) => {
+              handleSend(event);
+              setMenuVisible(false); // Hide menu after sending
+            }}>
+              <button type="button" className="menu-toggle" onClick={toggleMenu}>
+                <svg width="20" height="20" viewBox="0 0 30 20" fill="black" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="30" height="3"></rect>
+                  <rect y="8" width="30" height="3"></rect>
+                  <rect y="16" width="30" height="3"></rect>
+                </svg>
+              </button>
               <textarea
                 className="textarea"
                 value={inputMessage}
@@ -288,19 +306,43 @@ export default function ChatPage() {
                 onInput={handleResize}
               />
               <button type="submit" className="button" disabled={isLoading}>
-                {isLoading ? '⌛' : 'Send 🚀'}
+                {isLoading ? '⌛' : (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M2 21L23 12 2 3v7l15 2-15 2v7z" />
+                  </svg>
+                )}
               </button>
             </form>
-            <div className="button-wrapper">
-              <button onClick={handleClearMessages} className="clear-button" style={{ marginTop: '10px' }}>
-                🗑️ Clear
-              </button>
+            <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
+              <div className="menu-button-container">
+                <button onClick={() => { handleClearMessages(); setMenuVisible(false); }} className="button">
+                  📄 New
+                </button>
+                <button className="button">
+                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
+                    📂 Load
+                  </label>
+                  <input
+                    type="file"
+                    id="upload-json"
+                    className="hidden"
+                    accept=".json"
+                    onChange={(event) => { handleLoadChat(event); setMenuVisible(false); }}
+                  />
+                </button>
+                <button onClick={() => { handleDownloadJSON(); setMenuVisible(false); }} className="button" disabled={messages.length === 0}>
+                  💾 Save
+                </button>
+                <button onClick={() => setMenuVisible(false)} className="button close-button">
+                  ❌ Close
+                </button>
+              </div>
             </div>
           </div>
         )}
         {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
         <div className="info-text">
-          This minimalist chat app lets you talk to GPT-4. To use it, you'll need your OpenAI API key
+          This minimalist chat app lets you talk to GPT-4o. To use it, you'll need your OpenAI API key
           <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
             (https://platform.openai.com/api-keys)
           </a>. Your API key will only be stored locally in your browser.
@@ -311,5 +353,4 @@ export default function ChatPage() {
       </div>
     </div>
   );
-
 }
