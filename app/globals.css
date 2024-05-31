@@ -315,6 +315,9 @@ pre {
   align-items: center;
   justify-content: center;
   margin-right: 10px;
+  flex-shrink: 0;
+  width: 40px; /* Set a fixed width */
+  height: 40px; /* Set a fixed height */
 }
 
 .menu-toggle svg path {
