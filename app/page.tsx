@@ -290,7 +290,7 @@ export default function ChatPage() {
               </button>
             </form>
             <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
-              <div className="button-container">
+              <div className="menu-button-container">
                 <button onClick={handleClearMessages} className="button">
                   📄 New
                 </button>

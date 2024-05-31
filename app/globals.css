@@ -214,7 +214,16 @@ body {
 
 /* Button Container */
 .button-container {
+  position: absolute;
+  bottom: 5px;
+  right: 10px;
+  display: none;
+  gap: 5px; /* Space between the buttons */
+}
+
+.menu-button-container {
   display: flex;
+  flex-direction: column;
   justify-content: space-around;
   align-items: center;
   gap: 10px;
