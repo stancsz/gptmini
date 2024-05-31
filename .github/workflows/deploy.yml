@@ -11,19 +11,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v2
       with:
-        fetch-depth: 0
+        fetch-depth: 0  # Fetch all history for all branches and tags
 
     - name: Set up Git
       run: |
         git config --global user.name 'leangpt'
         git config --global user.email 'noreply@github.com'
 
-    - name: Authenticate with GitHub
-      env:
-        ACCESS_TOKEN: ${{ secrets.PAT }}
-      run: |
-        git remote set-url origin https://x-access-token:${ACCESS_TOKEN}@github.com/leangpt/leangpt.github.io
-
     - name: Push to remote repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        git push origin --all
+        git remote add target https://github.com/leangpt/leangpt.github.io.git
+        git push target --all
