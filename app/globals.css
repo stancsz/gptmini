@@ -55,7 +55,21 @@ body {
 /* Form Styles */
 .form {
   display: flex;
-  margin-bottom: 10px;
+  align-items: flex-end; /* Align items at the bottom */
+  width: 100%;
+  position: relative;
+}
+
+/* Form Container */
+.form-container {
+  border: 1px solid #ccc; /* Add a border around the div */
+  border-radius: 15px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  position: relative;
+  padding-bottom: 50px; /* Ensure space for buttons at the bottom */
 }
 
 /* Input Styles */
@@ -272,13 +286,13 @@ pre {
   word-wrap: break-word;
 }
 
-/* Textarea */
+/* Textarea Styles */
 .textarea {
   flex-grow: 1;
   width: 100%;
   padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
+  border: none; /* Remove border */
+  border-radius: 0; /* Remove border radius */
   resize: none;
   overflow: hidden;
   box-sizing: border-box;
@@ -286,6 +300,10 @@ pre {
   font-size: inherit;
   line-height: inherit;
   margin-right: 10px;
+  background-color: transparent; /* Make background transparent */
+  outline: none; /* Remove focus outline */
+  box-shadow: none; /* Remove any potential shadow */
+  color: inherit; /* Inherit text color */
 }
 
 /* Square Button */
@@ -320,6 +338,13 @@ pre {
   height: 40px; /* Set a fixed height */
 }
 
+/* Button Styles */
+.button,
+.menu-toggle {
+  flex-shrink: 0;
+  margin-bottom: 10px; /* Ensure buttons stay at the bottom */
+}
+
 .menu-toggle svg path {
   fill: black;
 }
@@ -330,7 +355,7 @@ pre {
   flex-direction: column;
   position: absolute;
   bottom: 60px;
-  bottom: 100%;
+  left: 10px; /* Adjust as needed */
   background: #fff;
   padding: 10px;
   border-radius: 15px;

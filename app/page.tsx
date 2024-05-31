@@ -263,7 +263,7 @@ export default function ChatPage() {
             <button type="submit" className="button">Save Token</button>
           </form>
         ) : (
-          <div>
+          <div className="form-container">
             <form className="form" onSubmit={handleSend}>
               <button type="button" className="menu-toggle" onClick={toggleMenu}>
                 <svg width="20" height="20" viewBox="0 0 30 20" fill="black" xmlns="http://www.w3.org/2000/svg">
@@ -271,7 +271,6 @@ export default function ChatPage() {
                   <rect y="8" width="30" height="3"></rect>
                   <rect y="16" width="30" height="3"></rect>
                 </svg>
-
               </button>
               <textarea
                 className="textarea"
@@ -284,20 +283,18 @@ export default function ChatPage() {
                 onInput={handleResize}
               />
               <button type="submit" className="button" disabled={isLoading}>
-                {isLoading ? '⌛' : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
-                  <path d="M2 21L23 12 2 3v7l15 2-15 2v7z" />
-                </svg>}
+                {isLoading ? '⌛' : (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                    <path d="M2 21L23 12 2 3v7l15 2-15 2v7z" />
+                  </svg>
+                )}
               </button>
             </form>
             <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
               <div className="menu-button-container">
-                <button onClick={handleClearMessages} className="button">
-                  📄 New
-                </button>
+                <button onClick={handleClearMessages} className="button">📄 New</button>
                 <button className="button">
-                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
-                    📂 Load
-                  </label>
+                  <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>📂 Load</label>
                   <input
                     type="file"
                     id="upload-json"
@@ -306,9 +303,7 @@ export default function ChatPage() {
                     onChange={handleLoadChat}
                   />
                 </button>
-                <button onClick={handleDownloadJSON} className="button" disabled={messages.length === 0}>
-                  💾 Save
-                </button>
+                <button onClick={handleDownloadJSON} className="button" disabled={messages.length === 0}>💾 Save</button>
               </div>
             </div>
           </div>
