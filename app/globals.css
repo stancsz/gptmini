@@ -55,11 +55,14 @@ body {
 /* Form Styles */
 .form {
   display: flex;
-  align-items: flex-end; /* Align items at the bottom */
+  align-items: center; /* Align items at the bottom */
   width: 100%;
   position: relative;
+  gap: 10px; /* Add space between the elements */
+  /* Remove any bottom padding or margin */
+  padding-bottom: 0;
+  margin-bottom: 0;
 }
-
 /* Form Container */
 .form-container {
   border: 1px solid #ccc; /* Add a border around the div */
@@ -69,7 +72,8 @@ body {
   flex-direction: column;
   background-color: #fff;
   position: relative;
-  padding-bottom: 50px; /* Ensure space for buttons at the bottom */
+  /* Remove or reduce padding-bottom to minimize gap */
+  padding-bottom: 0px; /* Adjust this value as needed */
 }
 
 /* Input Styles */
@@ -100,9 +104,9 @@ body {
   font-size: 16px;
   flex-shrink: 0;
   display: flex;
-  align-items: center;
+  align-items: center; /* Center the text vertically */
   justify-content: center;
-  align-self: flex-end;
+  align-self: center; /* Align the button in the center vertically */
 }
 
 .button:disabled {
@@ -332,10 +336,10 @@ pre {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-right: 10px;
   flex-shrink: 0;
   width: 40px; /* Set a fixed width */
   height: 40px; /* Set a fixed height */
+  align-self: center; /* Align the button in the center vertically */
 }
 
 /* Button Styles */
