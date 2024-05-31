@@ -288,7 +288,9 @@ export default function ChatPage() {
                 onInput={handleResize}
               />
               <button type="submit" className="button" disabled={isLoading}>
-                {isLoading ? '⌛' : 'Send 🚀'}
+                {isLoading ? '⌛' : <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                  <path d="M2 21L23 12 2 3v7l15 2-15 2v7z" />
+                </svg>}
               </button>
             </form>
             <div className="button-wrapper">
