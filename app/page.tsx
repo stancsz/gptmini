@@ -32,6 +32,7 @@ export default function ChatPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [menuVisible, setMenuVisible] = useState(false);
 
   const handleResize = () => {
     if (textareaRef.current) {
@@ -215,6 +216,11 @@ export default function ChatPage() {
     }
   };
 
+  const toggleMenu = () => {
+    setMenuVisible(!menuVisible);
+  };
+
+
 
   return (
     <div className="container">
@@ -259,6 +265,14 @@ export default function ChatPage() {
         ) : (
           <div>
             <form className="form" onSubmit={handleSend}>
+              <button type="button" className="menu-toggle" onClick={toggleMenu}>
+                <svg width="20" height="20" viewBox="0 0 30 20" fill="black" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="30" height="3"></rect>
+                  <rect y="8" width="30" height="3"></rect>
+                  <rect y="16" width="30" height="3"></rect>
+                </svg>
+
+              </button>
               <textarea
                 className="textarea"
                 value={inputMessage}
@@ -275,8 +289,7 @@ export default function ChatPage() {
                 </svg>}
               </button>
             </form>
-
-            <div className="menu-bar">
+            <div className={`menu-bar ${menuVisible ? 'show' : ''}`}>
               <button className="secondary-button warning">
                 <label htmlFor="upload-json" style={{ cursor: 'pointer' }}>
                   📂 Load Chat
@@ -289,11 +302,9 @@ export default function ChatPage() {
                   onChange={handleLoadChat}
                 />
               </button>
-
               <button onClick={handleDownloadJSON} className="secondary-button warning" disabled={messages.length === 0}>
                 💾 Save Chat (JSON)
               </button>
-
               <button onClick={handleClearMessages} className="clear-button" style={{ marginTop: '10px' }}>
                 🗑️ Clear
               </button>

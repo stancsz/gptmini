@@ -296,22 +296,37 @@ pre {
   display: none;
 }
 
-/* Menu Bar */
-.menu-bar {
-  width: 500px;
-  position: relative;
+/* Menu Toggle Button */
+.menu-toggle {
+  background: none;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  cursor: pointer;
+  padding: 8px;
   display: flex;
-  justify-content: center;
   align-items: center;
-  padding: 10px;
-  border-radius: 20px;
-  margin-bottom: 20px;
-  z-index: 1000;
-  top: 3%;
-  left: 50%;
-  transform: translateX(-50%);
+  justify-content: center;
+  margin-right: 10px;
 }
 
-.menu-bar button {
-  margin-right: 10px;
+.menu-toggle svg path {
+  fill: black;
+}
+
+/* Menu Bar */
+.menu-bar {
+  display: none;
+  flex-direction: column;
+  position: absolute;
+  bottom: 60px;
+  bottom: 100%;
+  background: #fff;
+  padding: 10px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.menu-bar.show {
+  display: flex;
 }
