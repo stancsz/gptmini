@@ -203,7 +203,7 @@ body {
 
 .message-bubble .download-button,
 .message-bubble .delete-button {
-  background-color: #ffffff; /* Default to blue */
+  background-color: #ccc; /* Darker red on hover */
   color: white;
   border: 1px solid #ccc;
   border-radius: 25%;
@@ -226,7 +226,8 @@ body {
 /* Adjust individual button hover states */
 .message-bubble:hover .download-button:hover,
 .message-bubble:hover .delete-button:hover {
-  background-color: #ccc; /* Darker red on hover */
+  background-color: #ffffff; /* Default to blue */
+
 }
 
 .message-bubble.user {
