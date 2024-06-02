@@ -343,7 +343,7 @@ const ChatPage = () => {
           </div>
         )}
         {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
-        <div className="info-text">
+        <div className="info-text" style={{ userSelect: 'none' }}>
           This minimalist chat app lets you talk to GPT-4o. To use it, you'll need your OpenAI API key
           <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
             (https://platform.openai.com/api-keys)

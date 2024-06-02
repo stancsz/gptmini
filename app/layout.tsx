@@ -11,7 +11,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               alt="Favicon"
               style={{ height: '48px', width: '48px', marginRight: '10px' }} // Adjust height and width statically
             />
-            <h1 style={{ fontSize: '24px' }}>GPT Mini</h1> {/* Assuming a default font size */}
+            <h1 style={{ fontSize: '24px', userSelect: 'none' }}>GPT Mini</h1> {/* Assuming a default font size */}
           </header>
           <main>{children}</main>
         </div>
