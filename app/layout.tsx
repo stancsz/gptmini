@@ -1,23 +1,13 @@
 import React from 'react';
-import Head from 'next/head';
-import getConfig from 'next/config';
-
-const { publicRuntimeConfig } = getConfig();
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
-  const assetPrefix = publicRuntimeConfig.assetPrefix || '';
-  const faviconPath = `${assetPrefix}/favicon.ico`;
-
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href={faviconPath} />
-      </Head>
       <body>
-        <div style={{ margin: '0 auto', maxWidth: '960px', padding: '20px', userSelect: 'none' }}>
+        <div style={{ margin: '0 auto', maxWidth: '960px', padding: '20px', userSelect: 'none'}}>
           <header style={{ display: 'flex', alignItems: 'center' }}>
             <img
-              src={faviconPath}
+              src="/favicon.ico"
               alt="Favicon"
               style={{ height: '48px', width: '48px', marginRight: '10px' }} // Adjust height and width statically
             />
