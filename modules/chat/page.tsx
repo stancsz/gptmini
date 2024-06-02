@@ -348,7 +348,7 @@ const ChatPage = () => {
           <a href="https://platform.openai.com/api-keys" target="_blank" rel="noopener noreferrer">
             (https://platform.openai.com/api-keys)
           </a>. Your API key will only be stored locally in your browser.
-          <a href="https://github.com/stancsz/my-chat-app" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/stancsz/gptmini" target="_blank" rel="noopener noreferrer">
             View source on GitHub
           </a>
         </div>

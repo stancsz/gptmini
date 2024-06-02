@@ -3,7 +3,7 @@
 
 A simple and minimalist chat application that allows users to communicate with OpenAI's GPT-4. This application requires an OpenAI API key to function.
 
-<img width="1133" alt="image" src="https://github.com/stancsz/my-chat-app/assets/43565411/08040d1e-d148-4542-9fa4-f0d65c52d889">
+<img width="1133" alt="image" src="image.png">
 
 
 ## Features
