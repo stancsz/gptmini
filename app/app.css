@@ -1,0 +1,35 @@
+/* app.css */
+
+/* Page Container */
+.page-container {
+    display: flex;
+    flex-direction: column;
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Page Header */
+  .page-header {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+  }
+  
+  /* Page Content */
+  .page-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Page Footer */
+  .page-footer {
+    text-align: center;
+    font-size: 0.875rem;
+    color: #6c757d;
+  }
+  
