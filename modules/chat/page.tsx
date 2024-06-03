@@ -148,7 +148,19 @@ const ChatPage = () => {
     setInputMessage('');
 
     const userMessages = updatedMessages.filter(msg => msg.role === 'user');
-    const lastFiveUserMessages = userMessages.slice(-5);
+    const formattedMessages = updatedMessages.map((msg, index) => {
+      if (msg.role === 'assistant' && msg.content.length > 100) {
+        return { role: msg.role, content: msg.content.substring(0, 100) };
+      } else if (msg.role === 'user') {
+        const userIndex = userMessages.indexOf(msg);
+        if (userIndex === 0 || userIndex >= userMessages.length - 2) {
+          return msg; // Include full length for the first and last two user messages
+        } else if (msg.content.length > 100) {
+          return { role: msg.role, content: msg.content.substring(0, 100) };
+        }
+      }
+      return msg;
+    });
 
     try {
       const openai = new OpenAI({
@@ -158,7 +170,7 @@ const ChatPage = () => {
 
       const response = await openai.chat.completions.create({
         model: "gpt-4o",
-        messages: lastFiveUserMessages.map(msg => ({ role: msg.role, content: msg.content })),
+        messages: formattedMessages.map(msg => ({ role: msg.role, content: msg.content })),
         temperature: 1,
         max_tokens: 4095,
         top_p: 1,
@@ -185,6 +197,8 @@ const ChatPage = () => {
       setIsLoading(false);
     }
   };
+
+
 
   const handleDownloadJSON = () => {
     const chatHistory = { messages };
