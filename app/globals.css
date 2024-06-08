@@ -1,4 +1,5 @@
 /* globals.css */
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
 
 /* General Styles */
 body {
@@ -75,4 +76,24 @@ pre {
   max-width: 100%;
   white-space: pre-wrap;
   word-wrap: break-word;
+}
+
+
+.title-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+  user-select: none;
+}
+
+.title {
+  font-family: 'Press Start 2P', cursive; /* Assume you load this font */
+  font-size: 1.5rem;
+  color: #000;
 }
