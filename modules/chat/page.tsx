@@ -172,7 +172,7 @@ const ChatPage = () => {
         model: "o1-mini",
         messages: formattedMessages.map(msg => ({ role: msg.role, content: msg.content })),
         temperature: 1,
-        max_tokens: 4095,
+        max_completion_tokens: 50000,
         top_p: 1,
         frequency_penalty: 0,
         presence_penalty: 0,
