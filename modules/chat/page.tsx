@@ -169,7 +169,7 @@ const ChatPage = () => {
       });
 
       const response = await openai.chat.completions.create({
-        model: "o1-mini",
+        model: "o3-mini",
         messages: formattedMessages.map(msg => ({ role: msg.role, content: msg.content })),
         temperature: 1,
         // max_completion_tokens: 50000,
