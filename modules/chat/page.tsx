@@ -166,6 +166,9 @@ const ChatPage = () => {
       const openai = new OpenAI({
         apiKey: userToken,
         dangerouslyAllowBrowser: true,
+        configuration: {
+          baseURL: 'https://api.pushihub.com/v1',
+  },
       });
 
       const response = await openai.chat.completions.create({
